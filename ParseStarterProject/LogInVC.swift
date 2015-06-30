@@ -21,6 +21,7 @@ class LogInVC: UIViewController, UITextFieldDelegate
     var formattedPhoneNumber : String?
     let numberToolbar : UIToolbar = UIToolbar()
 
+    @IBOutlet weak var logIngButton: UIButton!
     @IBOutlet weak var puffyCloud: UIImageView!
     
     @IBOutlet weak var phoneNumberCloud: UIImageView!
@@ -38,6 +39,14 @@ class LogInVC: UIViewController, UITextFieldDelegate
         self.phoneNumberTextField.hidden = false
         self.passwordTextField.hidden = true
         self.flipCloud.hidden = true
+        self.logIngButton.enabled = false
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let phoneNumber: AnyObject? = defaults.objectForKey("phoneNumber")
+        if phoneNumber != nil
+        {
+            self.phoneNumberTextField.text = phoneNumber as! String
+        }
     }
     
     
@@ -100,7 +109,7 @@ class LogInVC: UIViewController, UITextFieldDelegate
                 (returnedObjects, returnedError) -> Void in
                 if returnedError == nil
                 {
-                    println("we found: \(returnedObjects)")
+                    //println("we found: \(returnedObjects)")
                     if let usersArray = returnedObjects as? [PassiveUser]
                     {
                         for foundUser in usersArray
@@ -108,19 +117,31 @@ class LogInVC: UIViewController, UITextFieldDelegate
                             self.theCurrentUser = foundUser
                             let nextVC = QuotesVC(nibName: "QuotesVC", bundle: nil)
                             nextVC.theCurrentUser = foundUser
+                            println(nextVC.theCurrentUser)
                             let defaults = NSUserDefaults.standardUserDefaults()
                             defaults.setObject(self.theCurrentUser?.phoneNumber, forKey: "phoneNumber")
+                            defaults.setBool(true, forKey: "verified")
                             self.dismissViewControllerAnimated(true, completion: nil)
                             
                         }
                     }
+                    else
+                    {
+                        println("won't let us in!")
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        defaults.setObject(self.formattedPhoneNumber, forKey: "phoneNumber")
+                        defaults.setBool(true, forKey: "verified")
+                        self.dismissViewControllerAnimated(true, completion: nil)
+//                        but let's try to break through anyway
+                        
+                    }
                     if returnedObjects?.count > 0
                     {
-                        println("we found: \(returnedObjects)")
+                        //println("we found: \(returnedObjects)")
                     }
                     else
                     {
-                        println("there was an error: \(returnedError)")
+                        //println("there was an error: \(returnedError)")
                         let newQuery = PassiveUser.query()
                         newQuery?.whereKey("phoneNumber", equalTo: self.formattedPhoneNumber!)
                         newQuery?.findObjectsInBackgroundWithBlock({ (results, error) -> Void in
@@ -128,7 +149,7 @@ class LogInVC: UIViewController, UITextFieldDelegate
                             {
                                 if results!.count > 0
                                 {
-                                    println(self.formattedPhoneNumber)
+                                    //println(self.formattedPhoneNumber)
                                     self.showAlert("...we recognize that number though...if you forgot your password, you can reset it by signing up again with the same phone number")
                                     self.passwordTextField.text = ""
                                 }
@@ -144,6 +165,14 @@ class LogInVC: UIViewController, UITextFieldDelegate
                 }
         }
         
+    }
+    
+    func textFieldDidBeginEditing(textField: UITextField) ///log in button is only enbaled once the user has entered a password
+    {
+        if textField == passwordTextField
+        {
+            logIngButton.enabled = true
+        }
     }
     
     func boopla () {
@@ -190,7 +219,7 @@ class LogInVC: UIViewController, UITextFieldDelegate
     func queryLocalDataStore()
     {
         let defaults = NSUserDefaults.standardUserDefaults()
-        let objectId: AnyObject? =  defaults.objectForKey("phoneNumber")
+        let objectId: AnyObject? =  defaults.objectForKey("verified")
         if objectId != nil
         {
             self.dismissViewControllerAnimated(true, completion: nil)

@@ -98,8 +98,6 @@ class SignupVC: UIViewController, UITextFieldDelegate
             self.flatBubble.hidden = true
             self.flatbubbleFlip.hidden = false
             self.passwordTextField.becomeFirstResponder()
-            self.signUpButton.hidden = false
-
         }
         else if textField.tag == 4
         {
@@ -136,7 +134,7 @@ class SignupVC: UIViewController, UITextFieldDelegate
                 {
                     if returnedObjects != nil
                     {
-                        println("congrats, you already exist, do you want to update your info?")
+                        //println("congrats, you already exist, do you want to update your info?")
                         self.updateAnExisting = true
                         if let object = returnedObjects as? PassiveUser
                         {
@@ -149,7 +147,7 @@ class SignupVC: UIViewController, UITextFieldDelegate
                                 { (success, error) -> Void in
                                 if error == nil
                                     {
-                                        println("successful save")
+                                        //println("successful save")
                                     }
                                 })
                         }
@@ -157,12 +155,20 @@ class SignupVC: UIViewController, UITextFieldDelegate
                 }
                 else
                 {
-                    println("nope this person doesn't exist, we'll have to create you")
+                    //println("nope this person doesn't exist, we'll have to create you")
                     self.sendVerificationCode()
                 }
             }
         }
-
+    
+    func textFieldDidBeginEditing(textField: UITextField) ///sign in button is only enbaled once the user has entered a password
+    {
+        if textField == passwordTextField
+        {
+            signUpButton.hidden     = false
+        }
+    }
+    
 
     func sendVerificationCode()
     {
@@ -182,11 +188,11 @@ class SignupVC: UIViewController, UITextFieldDelegate
                 (success: Bool, error: NSError?) -> Void in
                 if success
                 {
-                    println("New Passive User has been saved.")
+                    //println("New Passive User has been saved.")
                     PFCloud.callFunctionInBackground("sendVerificationCode", withParameters: ["phoneNumber": self.formattedPhoneNumber!, "firstName": self.firstNameTextField.text, "password": self.passwordTextField.text.lowercaseString, "lastName": self.lastNameTextField.text]) { (results, error) -> Void in
                         if error == nil
                         {
-                            println("sent verification code")
+                            //println("sent verification code")
                         }
                     }
                 }
@@ -198,22 +204,26 @@ class SignupVC: UIViewController, UITextFieldDelegate
         PFCloud.callFunctionInBackground("verifyPhoneNumber", withParameters: ["phoneNumber":self.formattedPhoneNumber!, "phoneVerificationCode": code], block: { (success, error) -> Void in
             if error == nil
             {
-                println("verification code succeeded")
+                //println("verification code succeeded")
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setObject(self.formattedPhoneNumber!, forKey: "phoneNumber")
+                defaults.setBool(true, forKey: "verified")
+                self.dismissViewControllerAnimated(true, completion: nil)
                 
-                let alert = UIAlertController(title: "Agree to terms", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "I Agree", style: .Cancel, handler:
-                    {
-                        (action1) -> Void in
-                        let defaults = NSUserDefaults.standardUserDefaults()
-                        defaults.setObject(self.formattedPhoneNumber!, forKey: "phoneNumber")
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                }))
-                alert.addAction(UIAlertAction(title: "I do not Agree", style: .Default, handler: nil))
-                
-                alert.addAction(UIAlertAction(title: "View Terms", style: .Default, handler: { (action2) -> Void in
-                    self.performSegueWithIdentifier("terms", sender: nil)
-                }))
-                self.presentViewController(alert, animated: true, completion: nil)
+//                let alert = UIAlertController(title: "Agree to terms", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+//                alert.addAction(UIAlertAction(title: "I Agree", style: .Cancel, handler:
+//                    {
+//                        (action1) -> Void in
+//                        let defaults = NSUserDefaults.standardUserDefaults()
+//                        defaults.setObject(self.formattedPhoneNumber!, forKey: "phoneNumber")
+//                        self.dismissViewControllerAnimated(true, completion: nil)
+//                }))
+//                alert.addAction(UIAlertAction(title: "I do not Agree", style: .Default, handler: nil))
+//                
+//                alert.addAction(UIAlertAction(title: "View Terms", style: .Default, handler: { (action2) -> Void in
+//                    self.performSegueWithIdentifier("terms", sender: nil)
+//                }))
+//                self.presentViewController(alert, animated: true, completion: nil)
             }
             else
             {
@@ -245,7 +255,7 @@ class SignupVC: UIViewController, UITextFieldDelegate
         PFCloud.callFunctionInBackground("sendAnotherVerificationCode", withParameters: ["phoneNumber": formattedPhoneNumber!]) { (results, error) -> Void in
             if error == nil
             {
-                println("sent verification code")
+                //println("sent verification code")
             }
         }
         

@@ -16,6 +16,7 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     var theCurrentUser : PassiveUser?
     var userToDelete: PFObject?
     var refreshControl = UIRefreshControl()
+    var phoneNumber: AnyObject?
     
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
@@ -35,6 +36,9 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents:UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
         self.tableView.separatorColor = UIColor.lightGrayColor()
+//        self.queryLocalDataStore()
+
+
 
     }
     
@@ -57,50 +61,47 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     
     @IBAction func signOutButton(sender: AnyObject)
     {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(nil, forKey: "phoneNumber")
-        self.performSegueWithIdentifier("sendToLogin", sender: self)
+        self.performSegueWithIdentifier("myProfile", sender: self)
     }
     
     func queryLocalDataStore()
     {
+//        println("try to query our way in")
+        let logInQuery = PassiveUser.query()
+        logInQuery!.whereKey("phoneNumber", equalTo: phoneNumber!)
+        logInQuery!.findObjectsInBackgroundWithBlock
+            {
+                (returnedObjects, returnedError) -> Void in
+                if returnedError == nil
+                {
+                    
+                    if let usersArray = returnedObjects as? [PassiveUser]
+                    {
+                        for foundUser in usersArray
+                        {
+                            self.theCurrentUser = foundUser
+//                            println("user successfully logged as current user")
+                        }
+                    }
+                }
+        }
+    }
+
+    override func viewDidAppear(animated: Bool)
+    {
         let defaults = NSUserDefaults.standardUserDefaults()
-        let objectId: AnyObject? =  defaults.objectForKey("phoneNumber")
-        println(objectId)
-        if objectId == nil
+        let verified: AnyObject? =  defaults.objectForKey("verified")
+        phoneNumber = defaults.objectForKey("phoneNumber")
+//        println(phoneNumber)
+        if verified == nil
         {
             self.performSegueWithIdentifier("sendToLogin", sender: self)
         }
         else
         {
-            let logInQuery = PassiveUser.query()
-            logInQuery!.whereKey("phoneNumber", equalTo: objectId!)
-            logInQuery!.findObjectsInBackgroundWithBlock
-                {
-                    (returnedObjects, returnedError) -> Void in
-                    if returnedError == nil
-                    {
-                        println("we found: \(returnedObjects)")
-                        if let usersArray = returnedObjects as? [PassiveUser]
-                        {
-                            for foundUser in usersArray
-                            {
-                                self.theCurrentUser = foundUser
-                                
-                            }
-                        }
-                    }
-            }
+            queryLocalDataStore()
         }
-    }
-    
-    
-    
 
-    override func viewDidAppear(animated: Bool)
-    {
-        //query for locally saved user
-        self.queryLocalDataStore()
     }
     
     override func viewWillAppear(animated: Bool)
@@ -131,15 +132,15 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         cell.qTextLabel.text = "\"" + quoteToShowText + "\""
         if quoteToShow.likesCounter.integerValue < 5
         {
-            cell.qTextLabel.font = cell.qTextLabel.font.fontWithSize(10)
+            cell.qTextLabel.font = cell.qTextLabel.font.fontWithSize(14)
         }
         else if quoteToShow.likesCounter.integerValue > 25
         {
-            cell.qTextLabel.font = cell.qTextLabel.font.fontWithSize(32)
+            cell.qTextLabel.font = cell.qTextLabel.font.fontWithSize(36)
         }
         else
         {
-            let number = CGFloat(quoteToShow.likesCounter.integerValue + 7)
+            let number = CGFloat(quoteToShow.likesCounter.integerValue + 11)
             cell.qTextLabel.font = cell.qTextLabel.font.fontWithSize(number)
         }
         cell.qTextLabel.numberOfLines = 0
@@ -172,15 +173,13 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             cell.qTextLabel.textColor = UIColor.blackColor()
             cell.applaudButton.tintColor = UIColor(red: 162/255, green: 221/255, blue: 150/255, alpha: 1.0)
         }
-//        cell.contentView.layoutIfNeeded()
+        cell.contentView.layoutIfNeeded()
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-//        self.selectedQuote = self.quotes[indexPath.row]
-//        self.performSegueWithIdentifier("profile", sender: nil)
         
     }
     
@@ -191,6 +190,12 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
             let profileVC = segue.destinationViewController as! ProfileVC
             profileVC.theCurrentUser = self.theCurrentUser
             profileVC.selectedUser = self.selectedQuote?.saidBy
+        }
+        else if segue.identifier == "myProfile"
+        {
+            let profileVC = segue.destinationViewController as! ProfileVC
+            profileVC.theCurrentUser = self.theCurrentUser
+            profileVC.selectedUser = self.theCurrentUser
         }
             
         else if segue.identifier == "toLikes"
@@ -238,7 +243,6 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                 if error == nil
                 {
                     self.quotes = returnedQuotes as! [Quote]
-                    println(self.quotes)
                     self.refreshControl.endRefreshing()
                     self.tableView.reloadData()
                     self.tableView.setNeedsUpdateConstraints()
@@ -255,30 +259,33 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     {
         let queryForMyFriends = Follow.query()
         queryForMyFriends?.whereKey("from", equalTo: self.theCurrentUser!)
-        
+
         let queryForFriendsSpokes = PFQuery(className: "Quote")
         queryForFriendsSpokes.whereKey("saidBy", matchesKey: "to", inQuery: queryForMyFriends!)
+        
         
         let queryForFriendsPosts = PFQuery(className: "Quote")
         queryForFriendsPosts.whereKey("poster", matchesKey: "to", inQuery: queryForMyFriends!)
         
         let compoundQuery = PFQuery.orQueryWithSubqueries([queryForFriendsSpokes,queryForFriendsPosts])
         compoundQuery.orderByDescending("createdAt")
+        compoundQuery.includeKey("saidBy")
+        compoundQuery.includeKey("poster")
         compoundQuery.findObjectsInBackgroundWithBlock(
             {
                 (returnedQuotes, error) -> Void in
                 if error == nil
                 {
                     self.quotes = returnedQuotes as! [Quote]
-                    println(self.quotes)
                     self.tableView.reloadData()
                     self.tableView.setNeedsUpdateConstraints()
                     self.tableView.updateConstraintsIfNeeded()
                     self.tableView.layoutIfNeeded()
                     self.tableView.reloadData()
                     self.refreshControl.endRefreshing()
-
+                    self.tableView.reloadData()
                 }
+                self.tableView.reloadData()
         })
     }
     
@@ -290,13 +297,14 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         queryMoreQuotes.whereKey("poster", equalTo: self.theCurrentUser!)
         var compoundQuery = PFQuery.orQueryWithSubqueries([queryQuotes,queryMoreQuotes])
         compoundQuery.orderByDescending("createdAt")
+        compoundQuery.includeKey("saidBy")
+        compoundQuery.includeKey("poster")
         compoundQuery.findObjectsInBackgroundWithBlock(
             {
                 (returnedQuotes, error) -> Void in
                 if error == nil
                 {
                     self.quotes = returnedQuotes as! [Quote]
-                    println(self.quotes)
                     self.tableView.reloadData()
                     self.tableView.setNeedsUpdateConstraints()
                     self.tableView.updateConstraintsIfNeeded()
@@ -357,7 +365,7 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     }
     func theUserDoubleTapped(yes: Bool, forCell: QuoteCell, andQuote: Quote)
     {
-        println("double tap here")
+        //println("double tap here")
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             forCell.clapImage.alpha = 1.0
         }) { (finished) -> Void in
@@ -391,7 +399,7 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
                     { (success, error) -> Void in
                         if error == nil
                         {
-                            println("quote was saved, was the countersaved?")
+                            //println("quote was saved, was the countersaved?")
                         }
                 }
 
@@ -416,8 +424,17 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
     func sendToLikeVC(withQuote: Quote)
     {
         self.selectedQuote = withQuote
-    }
+        let myLikesHere = withQuote.upvotes
+        //println(myLikesHere)
 
+    }
+//unwind segue for sign out
+    @IBAction func logOutSegue (segue:UIStoryboardSegue)
+    {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(nil, forKey: "verified")
+        self.queryLocalDataStore()
+    }
     
 }
 

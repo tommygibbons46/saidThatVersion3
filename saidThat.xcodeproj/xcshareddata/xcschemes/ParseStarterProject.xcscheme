@@ -7,6 +7,20 @@
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "81BA81441A49DA1800E65899"
+               BuildableName = "ParseStarterProject.app"
+               BlueprintName = "ParseStarterProject"
+               ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
@@ -15,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "81BA81441A49DA1800E65899"
-               BuildableName = "ParseStarterProject.app"
-               BlueprintName = "ParseStarterProject"
-               ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+               BuildableName = "saidThat.app"
+               BlueprintName = "saidThat"
+               ReferencedContainer = "container:saidThat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +47,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81BA81441A49DA1800E65899"
-            BuildableName = "ParseStarterProject.app"
-            BlueprintName = "ParseStarterProject"
-            ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+            BuildableName = "saidThat.app"
+            BlueprintName = "saidThat"
+            ReferencedContainer = "container:saidThat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -44,17 +58,18 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81BA81441A49DA1800E65899"
-            BuildableName = "ParseStarterProject.app"
-            BlueprintName = "ParseStarterProject"
-            ReferencedContainer = "container:ParseStarterProject.xcodeproj">
+            BuildableName = "saidThat.app"
+            BlueprintName = "saidThat"
+            ReferencedContainer = "container:saidThat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -66,7 +81,8 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "81BA81441A49DA1800E65899"

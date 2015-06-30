@@ -40,6 +40,11 @@ class LikesViewController: UIViewController, UITableViewDataSource, UITableViewD
             if error == nil
             {
                 self.likes = returnedLikers as! [Upvote]
+                //println(self.likes)
+                for like in self.likes
+                {
+                    //println(like.liker)
+                }
                 self.tableView.reloadData()
             }
         })
@@ -63,25 +68,43 @@ class LikesViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.theCurrentUser = self.theCurrentUser
         cell.selectedUser = upvote.liker
         self.userToShow = upvote.liker
+        cell.profileImage.contentMode = UIViewContentMode.Center
         if userToShow!.hasPhoto.isEqualToNumber(0)
         {
-            cell.profileImage.contentMode = UIViewContentMode.Center
+            cell.profileImage.image = UIImage(named: "miniflatbubble")
+//            cell.profileImage.contentMode = UIViewContentMode.Center
         }
-        if userToShow!.hasPhoto.isEqualToNumber(1)
+        else
         {
+            cell.profileImage.contentMode = UIViewContentMode.ScaleAspectFit
                 upvote.liker.profilePic.getDataInBackgroundWithBlock({ (data, error) -> Void in
                 if error == nil
                 {
                     let image = UIImage(data:data!)
                     cell.profileImage.image = image
-                    cell.profileImage.contentMode = UIViewContentMode.ScaleAspectFit
+//                    cell.profileImage.contentMode = UIViewContentMode.ScaleAspectFit
                 }
             })
         }
+//        if userToShow!.hasPhoto.isEqualToNumber(1)
+//        {
+//                upvote.liker.profilePic.getDataInBackgroundWithBlock({ (data, error) -> Void in
+//                if error == nil
+//                {
+//                    let image = UIImage(data:data!)
+//                    cell.profileImage.image = image
+//                    cell.profileImage.contentMode = UIViewContentMode.ScaleAspectFit
+//                }
+//            })
+//        }
      
         if cell.theCurrentUser == upvote.liker
         {
             cell.followButton.hidden = true
+        }
+        else
+        {
+            cell.followButton.hidden = false
         }
         let string = upvote.liker.firstName + " " + upvote.liker.lastName
         if contains(self.usersFollowsPeople, upvote.liker)
@@ -132,7 +155,7 @@ class LikesViewController: UIViewController, UITableViewDataSource, UITableViewD
                 (succeeded, error) -> Void in
                 if error == nil
                 {
-                    println("follow saved")
+                    //println("follow saved")
                     self.usersFollows.append(newFollow)
                     self.usersFollowsPeople.append(newFollow.to)
                     self.tableView.reloadData()
@@ -145,7 +168,7 @@ class LikesViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         if contains(self.usersFollowsPeople, to)
         {
-            println("yes we have this users follow person")
+            //println("yes we have this users follow person")
             //for every follow in usersFollows where the to matches this to here, delete
             for follow in self.usersFollows
             {
@@ -159,7 +182,7 @@ class LikesViewController: UIViewController, UITableViewDataSource, UITableViewD
                     follow.deleteInBackgroundWithBlock({ (success, error) -> Void in
                         if error == nil
                         {
-                            println("we deleted this son of a bitch")
+                            //println("we deleted this guy")
                             self.tableView.reloadData()
                         }
                     })
@@ -195,7 +218,7 @@ class LikesViewController: UIViewController, UITableViewDataSource, UITableViewD
                         {
                             self.usersFollowsPeople.append(follow.to)
                         }
-                        println("here is everyone I follow \(self.usersFollowsPeople)")
+                        //println("here is everyone I follow \(self.usersFollowsPeople)")
                         self.tableView.reloadData()
 
                     }

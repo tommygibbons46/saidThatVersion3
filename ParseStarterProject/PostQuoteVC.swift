@@ -100,8 +100,8 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
                 {
                     if returnedObjects!.count > 0
                     {
-                        println("user is already active")
-                        println(returnedObjects)
+                        //println("user is already active")
+                        //println(returnedObjects)
                         if let objects = returnedObjects as? [PassiveUser]
                         {
                             for foundUser in objects
@@ -128,7 +128,7 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
     
     @IBAction func profButtonHit(sender: AnyObject)
         {
-            println("prof button tap")
+            //println("prof button tap")
         }
     @IBAction func quoteItHereTap(sender: AnyObject)
     {
@@ -176,9 +176,9 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
     
     func textFieldDidBeginEditing(textField: UITextField)
     {
-        
         if haveSeenContacts == false
         {
+            self.resignFirstResponder() // should make the keyboard not appear
             let picker = ABPeoplePickerNavigationController()
             picker.peoplePickerDelegate = self
             self.presentViewController(picker, animated: true, completion: nil)
@@ -192,7 +192,6 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
             else
             {
                 self.checkButton.hidden = false
-
             }
         }
     }
@@ -209,9 +208,13 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
         if (ABMultiValueGetCount(phoneNumbers)>0 )
         {
             let index = 0 as CFIndex
-            let phoneNumber = ABMultiValueCopyValueAtIndex(phoneNumbers, index).takeRetainedValue() as! String
+            var phoneNumber = ABMultiValueCopyValueAtIndex(phoneNumbers, index).takeRetainedValue() as! String
             self.phoneNumberTextField.text = phoneNumber
-            
+            let firstNumber = first(phoneNumber)
+            if firstNumber == "1"
+            {
+                phoneNumber = dropFirst(phoneNumber)
+            }
             let aString = phoneNumber.stringByReplacingOccurrencesOfString("+1", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             let chars: [Character] = ["(", ")", "-", " ", "+"]
             formattedString = aString.stripCharactersInSet(chars)
@@ -298,7 +301,7 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
                 (success: Bool, error: NSError?) -> Void in
                 if success
                 {
-                    println("New Passive User has been saved.")
+                    //println("New Passive User has been saved.")
                     self.checkButton.hidden = true
                     self.personName.hidden = false
                     self.nameString = NSString(format: "%@ %@", quotedUser.firstName, quotedUser.lastName) as String
@@ -326,7 +329,7 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
                 (success: Bool, error: NSError?) -> Void in
                 if success
                 {
-                    println("saved user and quote")
+                    //println("saved user and quote")
                     self.navigationController?.popViewControllerAnimated(true)
                     self.sendText()
                 }
@@ -345,7 +348,7 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
                 {
                     if returnedObjects!.count > 0
                     {
-                        println("this user exists")
+                        //println("this user exists")
                         if let objects = returnedObjects as? [PassiveUser]
                         {
                             for foundUser in objects
@@ -379,25 +382,14 @@ class PostQuoteVC: UIViewController, UITextViewDelegate, UITextFieldDelegate, AB
                     (success, error) -> Void in
                     if error == nil
                     {
-                        println("sent a text to that number")
+                        //println("sent a text to that number")
                     }
                 
 
         })
     }
     
-//    func boopla () {
-//        phoneNumberTextField.resignFirstResponder()
-//    }
-//    
-//    func hoopla () {
-//        phoneNumberTextField.text=""
-//        phoneNumberTextField.resignFirstResponder()
-//    }
-//    
-    
-    
-    //took this out for a while
+
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool
     {

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2061" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="scm-G2-hBp">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -10,7 +9,7 @@
         <!--QuotesVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="QuotesVC" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="QuotesVC" customModule="saidThat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -23,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellID" rowHeight="83" id="aQn-kb-xdz" customClass="QuoteCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellID" rowHeight="83" id="aQn-kb-xdz" customClass="QuoteCell" customModule="saidThat" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aQn-kb-xdz" id="fcR-Rl-RKr">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -415,7 +414,8 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="aoo-df-C2x">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="JHA-B2-6YG">
+                        <barButtonItem key="leftBarButtonItem" image="profileSized" id="JHA-B2-6YG">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="signOutButton:" destination="BYZ-38-t0r" id="HIi-NM-XQi"/>
                             </connections>
@@ -447,6 +447,7 @@
                         <segue destination="N4q-9D-paA" kind="show" identifier="profile" id="OlM-Et-FA4"/>
                         <segue destination="bVO-tK-dlc" kind="presentation" identifier="sendToLogin" id="BXy-Ee-MgX"/>
                         <segue destination="N4q-9D-paA" kind="show" identifier="posterProfile" id="dzI-Df-VNI"/>
+                        <segue destination="N4q-9D-paA" kind="show" identifier="myProfile" id="BjN-iU-S12"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -457,7 +458,7 @@
         <!--Log InVC-->
         <scene sceneID="89n-5N-2eg">
             <objects>
-                <viewController id="bVO-tK-dlc" customClass="LogInVC" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bVO-tK-dlc" customClass="LogInVC" customModule="saidThat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AZo-EQ-ZS0"/>
                         <viewControllerLayoutGuide type="bottom" id="KdP-g6-yvF"/>
@@ -582,7 +583,7 @@
                                     </constraint>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="u4i-hj-Xig"/>
@@ -637,7 +638,7 @@
                                     <constraint firstAttribute="height" constant="30" id="mtd-gt-n24"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="17"/>
-                                <state key="normal" title="signUp">
+                                <state key="normal" title="first time? signUp">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -789,6 +790,7 @@
                     <connections>
                         <outlet property="cloud" destination="9g5-Xq-STW" id="PPr-Jb-u7H"/>
                         <outlet property="flipCloud" destination="HQC-Ig-WPi" id="4JZ-R5-UUZ"/>
+                        <outlet property="logIngButton" destination="txS-yk-UbB" id="5Cs-3d-Nba"/>
                         <outlet property="passwordTextField" destination="9Au-ID-cyi" id="vV1-YK-we1"/>
                         <outlet property="phoneNumberTextField" destination="bgF-5v-cVQ" id="iNA-qn-wuU"/>
                         <outlet property="puffyCloud" destination="8XF-Lh-DO2" id="cER-bm-ssK"/>
@@ -801,7 +803,7 @@
         <!--SignupVC-->
         <scene sceneID="f11-8c-d8k">
             <objects>
-                <viewController storyboardIdentifier="SignupVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="odb-te-mZr" customClass="SignupVC" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="odb-te-mZr" customClass="SignupVC" customModule="saidThat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OXs-lq-9MK"/>
                         <viewControllerLayoutGuide type="bottom" id="hpi-H8-D53"/>
@@ -1138,7 +1140,7 @@
         <!--Post QuoteVC-->
         <scene sceneID="3lM-rQ-Wfs">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="lq8-jR-bLG" customClass="PostQuoteVC" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="lq8-jR-bLG" customClass="PostQuoteVC" customModule="saidThat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ebT-lc-cd4"/>
                         <viewControllerLayoutGuide type="bottom" id="L0z-wI-4ME"/>
@@ -1561,7 +1563,7 @@
         <!--Title-->
         <scene sceneID="uRt-wW-4K6">
             <objects>
-                <viewController storyboardIdentifier="profile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="N4q-9D-paA" customClass="ProfileVC" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="profile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="N4q-9D-paA" customClass="ProfileVC" customModule="saidThat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hep-l7-BaQ"/>
                         <viewControllerLayoutGuide type="bottom" id="ZbS-pz-4qX"/>
@@ -1620,7 +1622,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="specialprofileImage2" translatesAutoresizingMaskIntoConstraints="NO" id="mql-hx-UyY">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mql-hx-UyY">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.63529411759999999" green="0.86666666670000003" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" red="0.63529411759999999" green="0.86666666670000003" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1825,7 +1827,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="user" rowHeight="87" id="Ncb-Xy-ITK" customClass="UserCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="user" rowHeight="87" id="Ncb-Xy-ITK" customClass="UserCell" customModule="saidThat" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ncb-Xy-ITK" id="Pka-2M-08J">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1840,7 +1842,7 @@
                                                         <action selector="user2ButtonTap:" destination="Ncb-Xy-ITK" eventType="touchUpInside" id="hWo-Cg-TKw"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="miniflatbubble" translatesAutoresizingMaskIntoConstraints="NO" id="Lw0-Gg-sm4">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lw0-Gg-sm4">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <color key="backgroundColor" red="0.85490196080000003" green="0.67450980390000004" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -1882,8 +1884,7 @@
                                                             <exclude reference="xgI-3h-TeT"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="232" y="28" width="75" height="30"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="vEQ-lf-zNU"/>
                                                             <include reference="xgI-3h-TeT"/>
@@ -1948,7 +1949,7 @@
                                             <outlet property="userButton2" destination="zRR-j0-MTd" id="tf4-3J-IBv"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="quote" rowHeight="83" id="eeQ-nv-dMf" customClass="QuoteCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="quote" rowHeight="83" id="eeQ-nv-dMf" customClass="QuoteCell" customModule="saidThat" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eeQ-nv-dMf" id="j8V-vK-GCV">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -1995,8 +1996,7 @@
                                                             <exclude reference="jXo-fF-Olr"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="148" y="29" width="25" height="25"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="KoT-M2-ctP"/>
                                                             <include reference="jXo-fF-Olr"/>
@@ -2020,8 +2020,7 @@
                                                             <exclude reference="l6C-84-FCr"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="284" y="56" width="46" height="30"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="MOZ-2w-OoF"/>
                                                             <include reference="l6C-84-FCr"/>
@@ -2051,8 +2050,7 @@
                                                             <exclude reference="QKm-DF-lKE"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="280" y="26" width="46" height="30"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="BKD-3j-aLp"/>
                                                             <include reference="QKm-DF-lKE"/>
@@ -2081,8 +2079,7 @@
                                                             <exclude reference="WzF-Z3-EZD"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="263" y="-4" width="67" height="30"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="BOq-zE-bTt"/>
                                                             <include reference="WzF-Z3-EZD"/>
@@ -2097,9 +2094,6 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="9" y="9" width="263" height="14"/>
-                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -2275,6 +2269,32 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLD-GE-MfE">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <color key="backgroundColor" red="0.85490196080000003" green="0.67450980390000004" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="sWE-kR-1j5"/>
+                                    <constraint firstAttribute="width" constant="163" id="vBl-lk-E3R"/>
+                                </constraints>
+                                <state key="normal" title="Sign Out">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="sWE-kR-1j5"/>
+                                        <exclude reference="vBl-lk-E3R"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="sWE-kR-1j5"/>
+                                        <exclude reference="vBl-lk-E3R"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <segue destination="4B0-OJ-C95" kind="unwind" unwindAction="logOutSegue:" id="ibT-SJ-2xV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -2323,8 +2343,10 @@
                                 <variation key="widthClass=compact" constant="-10"/>
                             </constraint>
                             <constraint firstItem="mql-hx-UyY" firstAttribute="top" secondItem="hep-l7-BaQ" secondAttribute="bottom" constant="10" id="SnM-1K-ZEL"/>
+                            <constraint firstItem="uLD-GE-MfE" firstAttribute="leading" secondItem="mql-hx-UyY" secondAttribute="trailing" constant="80" id="Tr6-aB-qRb"/>
                             <constraint firstItem="8C6-bF-I2Y" firstAttribute="top" secondItem="MMX-Xv-PjP" secondAttribute="bottom" constant="-1" id="WKP-Yc-cmA"/>
                             <constraint firstAttribute="bottomMargin" secondItem="x3z-pc-vIO" secondAttribute="bottom" id="b4i-6i-Dh7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uLD-GE-MfE" secondAttribute="trailing" constant="60" id="eK7-pk-dnY"/>
                             <constraint firstItem="Biv-mZ-u3h" firstAttribute="leading" secondItem="mql-hx-UyY" secondAttribute="trailing" constant="27" id="hdZ-9J-laJ">
                                 <variation key="widthClass=compact" constant="15"/>
                             </constraint>
@@ -2334,6 +2356,9 @@
                             <constraint firstItem="mql-hx-UyY" firstAttribute="top" secondItem="hep-l7-BaQ" secondAttribute="bottom" constant="22" id="l5a-vQ-mmd"/>
                             <constraint firstItem="MMX-Xv-PjP" firstAttribute="leading" secondItem="Yv2-5i-DV4" secondAttribute="trailing" constant="31" id="nyk-L6-rML">
                                 <variation key="widthClass=compact" constant="20"/>
+                            </constraint>
+                            <constraint firstItem="uLD-GE-MfE" firstAttribute="bottom" secondItem="mql-hx-UyY" secondAttribute="bottom" id="pcv-O9-eBd">
+                                <variation key="widthClass=compact" constant="8"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="gOX-7H-ta7" secondAttribute="trailing" constant="25" id="qka-oT-eTs">
                                 <variation key="widthClass=compact" constant="0.0"/>
@@ -2362,6 +2387,7 @@
                                 <exclude reference="gOX-7H-ta7"/>
                                 <exclude reference="x3z-pc-vIO"/>
                                 <exclude reference="Yv2-5i-DV4"/>
+                                <exclude reference="uLD-GE-MfE"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="C8j-lj-K23"/>
@@ -2387,6 +2413,9 @@
                                 <exclude reference="KPR-ue-PKE"/>
                                 <exclude reference="RBJ-h9-I9y"/>
                                 <exclude reference="qka-oT-eTs"/>
+                                <exclude reference="Tr6-aB-qRb"/>
+                                <exclude reference="eK7-pk-dnY"/>
+                                <exclude reference="pcv-O9-eBd"/>
                                 <exclude reference="17i-wM-oj4"/>
                                 <exclude reference="4os-3F-OPn"/>
                                 <exclude reference="LZx-r5-fn3"/>
@@ -2411,6 +2440,7 @@
                                 <include reference="gOX-7H-ta7"/>
                                 <include reference="x3z-pc-vIO"/>
                                 <include reference="Yv2-5i-DV4"/>
+                                <include reference="uLD-GE-MfE"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="C8j-lj-K23"/>
@@ -2436,6 +2466,9 @@
                                 <include reference="KPR-ue-PKE"/>
                                 <include reference="RBJ-h9-I9y"/>
                                 <include reference="qka-oT-eTs"/>
+                                <include reference="Tr6-aB-qRb"/>
+                                <include reference="eK7-pk-dnY"/>
+                                <include reference="pcv-O9-eBd"/>
                                 <include reference="17i-wM-oj4"/>
                                 <exclude reference="4os-3F-OPn"/>
                                 <include reference="LZx-r5-fn3"/>
@@ -2469,13 +2502,15 @@
                         <outlet property="profilePic" destination="mql-hx-UyY" id="NCr-RL-Qgg"/>
                         <outlet property="quotesCountLabel" destination="yvv-Iq-J6U" id="wse-vc-Z2F"/>
                         <outlet property="quotesLabel" destination="Biv-mZ-u3h" id="T4L-MA-t8k"/>
+                        <outlet property="signOutButton" destination="uLD-GE-MfE" id="cIs-Yj-BZe"/>
                         <outlet property="tableView" destination="x3z-pc-vIO" id="8CS-OX-m18"/>
                         <segue destination="jBu-pg-5k1" kind="show" identifier="showLikes" id="Xu6-a7-54e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mb4-3O-DKZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="4B0-OJ-C95" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3066" y="1061"/>
+            <point key="canvasLocation" x="1392" y="1161"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="1zx-LA-YeB">
@@ -2486,12 +2521,13 @@
                         <viewControllerLayoutGuide type="bottom" id="Ggu-py-81B"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FBe-mI-AZ8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lcf-zo-BX4">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.63529411759999999" green="0.86666666670000003" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <mutableString key="text">Software license terms and conditions
+                                <string key="text">Software license terms and conditions
 BY INSTALLING OR USING THE LICENSED SOFTWARE FROM STATACORP LP (“STATACORP”), THE INDIVIDUAL IF ACTING ON BEHALF OF HIMSELF OR HERSELF (“INDIVIDUAL CUSTOMER“) OR THE INDIVIDUAL WHO IS ACTING ON BEHALF OF AN EDUCATIONAL OR NONPROFIT INSTITUTION, GOVERNMENTAL AGENCY, OR OTHER ENTITY (“ENTITY CUSTOMER”, THE INDIVIDUAL CUSTOMER AND ENTITIY CUSTOMER TOGETHER ARE ”CUSTOMER”) IS AGREEING TO BE BOUND BY THIS SOFTWARE LICENSE AGREEMENT (“AGREEMENT”).
 
 IF CUSTOMER DOES NOT AGREE TO THE TERMS OF THIS AGREEMENT, CUSTOMER MAY NOT INSTALL, COPY, OR USE THE LICENSED SOFTWARE.
@@ -2641,7 +2677,7 @@ The Licensed Software under this Agreement is “commercial computer software”
 The World Health Organization (WHO) ICD-10 codes are provided as part ofthe Licensed Software with the expressed permission and direction of the WHO. The use of ICD-10 with Licensed Software does not imply any endorsement of Licensed Software by WHO. The ICD-10 codes shall not be amended, abridged, translated, deleted or in any way changed without the consent of WHO. The ICD-10 codes are for the use of Authorized User. They are not to be reproduced, transmitted or distributed outside of Authorized User's organization in any form or by any means except in summary results of analyses. ICD-10 is distributed without warranty of any kind, either express or implied. In no event shall the World Health Organization be liable for damages, including any general, special, incidental, or consequential damages, arising out of the use of ICD-10.
 
 11. GENERAL.
-Except as expressly provided herein, Customer may not assign or transfer any of its rights under this Agreement (including its licenses with respect to the Licensed Software and Documentation) without the prior written consent of StataCorp. Unless the Customer is required by statute or regulation to apply the law of a state other than Texas, this Agreement will be governed by and construed in accordance with the laws of the State of Texas and the federal U.S. laws applicable therein, excluding any conflicts of law provisions, and the Customer and StataCorp agree to submit to the personal and exclusive jurisdiction of the courts located in Harris County, Texas. If the statute or regulation applying to the Customer requires the application of a law of a state other than Texas, the parties agree that the terms of this Agreement shall be governed and construed in accordance with the law specified in such statute or regulation, and the Customer shall give written notice of such requirement to StataCorp. The application of such different law shall be effective upon the receipt of such written notice by StataCorp. The parties agree that the United Nations Convention on Contracts for the International Sale of Goods will not apply to this Agreement. The failure of either party to require performance by the other party of any provision hereof shall not affect the full right to require such performance at any time thereafter, nor shall the waiver by either party of a breach of any provision hereof be taken or held to be a waiver of the provision itself. If any provision of this Agreement is found void and unenforceable, it will be replaced to the extent possible by StataCorp with a provision that comes closest to the meaning of the original provision. This Agreement and the documents referenced in this Agreement constitute the entire agreement between Customer and StataCorp relating to its subject matter and all terms herein and supersede all prior or contemporaneous agreements or understandings. This Agreement may be modified or changed only in writing signed by authorized representatives of Customer and StataCorp. Notices hereunder shall be in writing and addressed to Customer at the address provided when purchasing this license or, in the case of StataCorp, when addressed to StataCorp LP, Attn: Director of Operations, 4905 Lakeway Drive, College Station, Texas 77845, USA.</mutableString>
+Except as expressly provided herein, Customer may not assign or transfer any of its rights under this Agreement (including its licenses with respect to the Licensed Software and Documentation) without the prior written consent of StataCorp. Unless the Customer is required by statute or regulation to apply the law of a state other than Texas, this Agreement will be governed by and construed in accordance with the laws of the State of Texas and the federal U.S. laws applicable therein, excluding any conflicts of law provisions, and the Customer and StataCorp agree to submit to the personal and exclusive jurisdiction of the courts located in Harris County, Texas. If the statute or regulation applying to the Customer requires the application of a law of a state other than Texas, the parties agree that the terms of this Agreement shall be governed and construed in accordance with the law specified in such statute or regulation, and the Customer shall give written notice of such requirement to StataCorp. The application of such different law shall be effective upon the receipt of such written notice by StataCorp. The parties agree that the United Nations Convention on Contracts for the International Sale of Goods will not apply to this Agreement. The failure of either party to require performance by the other party of any provision hereof shall not affect the full right to require such performance at any time thereafter, nor shall the waiver by either party of a breach of any provision hereof be taken or held to be a waiver of the provision itself. If any provision of this Agreement is found void and unenforceable, it will be replaced to the extent possible by StataCorp with a provision that comes closest to the meaning of the original provision. This Agreement and the documents referenced in this Agreement constitute the entire agreement between Customer and StataCorp relating to its subject matter and all terms herein and supersede all prior or contemporaneous agreements or understandings. This Agreement may be modified or changed only in writing signed by authorized representatives of Customer and StataCorp. Notices hereunder shall be in writing and addressed to Customer at the address provided when purchasing this license or, in the case of StataCorp, when addressed to StataCorp LP, Attn: Director of Operations, 4905 Lakeway Drive, College Station, Texas 77845, USA.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -2658,10 +2694,10 @@ Except as expressly provided herein, Customer may not assign or transfer any of 
                                 <exclude reference="lcf-zo-BX4"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="nAb-bW-28x"/>
                                 <exclude reference="3xh-AO-KOS"/>
                                 <exclude reference="6VX-6I-LT3"/>
                                 <exclude reference="kCq-90-Vf7"/>
-                                <exclude reference="nAb-bW-28x"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -2669,10 +2705,10 @@ Except as expressly provided herein, Customer may not assign or transfer any of 
                                 <include reference="lcf-zo-BX4"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="nAb-bW-28x"/>
                                 <include reference="3xh-AO-KOS"/>
                                 <include reference="6VX-6I-LT3"/>
                                 <include reference="kCq-90-Vf7"/>
-                                <include reference="nAb-bW-28x"/>
                             </mask>
                         </variation>
                     </view>
@@ -2710,7 +2746,7 @@ Except as expressly provided herein, Customer may not assign or transfer any of 
         <!--Likes View Controller-->
         <scene sceneID="pmW-sO-anJ">
             <objects>
-                <viewController id="jBu-pg-5k1" customClass="LikesViewController" customModule="ParseStarterProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jBu-pg-5k1" customClass="LikesViewController" customModule="saidThat" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Itw-8e-vCC"/>
                         <viewControllerLayoutGuide type="bottom" id="wrz-Rb-d4S"/>
@@ -2723,7 +2759,7 @@ Except as expressly provided herein, Customer may not assign or transfer any of 
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellID" rowHeight="170" id="ooU-0M-Icl" customClass="UserCell" customModule="ParseStarterProject" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cellID" rowHeight="170" id="ooU-0M-Icl" customClass="UserCell" customModule="saidThat" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ooU-0M-Icl" id="b4z-gs-1F4">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -2749,8 +2785,7 @@ Except as expressly provided herein, Customer may not assign or transfer any of 
                                                             <exclude reference="8Kk-gQ-iHu"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="227" y="70" width="90" height="30"/>
+                                                    <variation key="widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="2YQ-7i-Isk"/>
                                                             <include reference="8Kk-gQ-iHu"/>
@@ -2770,7 +2805,7 @@ Except as expressly provided herein, Customer may not assign or transfer any of 
                                                         <action selector="userButtonTap:" destination="ooU-0M-Icl" eventType="touchUpInside" id="0fq-LY-woT"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="miniflatbubble" translatesAutoresizingMaskIntoConstraints="NO" id="yMN-ek-4vU">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yMN-ek-4vU">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <color key="backgroundColor" red="0.85490196080000003" green="0.67450980390000004" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" red="0.85490196080000003" green="0.67450980390000004" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
@@ -2916,13 +2951,12 @@ Except as expressly provided herein, Customer may not assign or transfer any of 
         <image name="flatBubble" width="394" height="121"/>
         <image name="flatBubbleFlip" width="394" height="121"/>
         <image name="flatCloudHigherResSized" width="37" height="30"/>
-        <image name="miniflatbubble" width="20" height="16"/>
-        <image name="specialprofileImage2" width="100" height="80"/>
+        <image name="profileSized" width="40" height="40"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="dzI-Df-VNI"/>
         <segue reference="MzL-eQ-wd6"/>
         <segue reference="tck-Wn-KVu"/>
-        <segue reference="iyA-Ht-FP2"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

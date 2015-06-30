@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>144A71EF-B47D-4470-8947-9DD1A738023F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2AF8132B3BDF62F7D8945176744497FAF6A4981F</key>
+		<string>https://github.com/tommygibbons46/saidThatFinal.git</string>
+		<key>E927DE07DB5754A01D5927073321D6D127E348AF</key>
+		<string>https://github.com/tommygibbons46/saidThatv2.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>saidThat.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2AF8132B3BDF62F7D8945176744497FAF6A4981F</key>
+		<string>../..</string>
+		<key>E927DE07DB5754A01D5927073321D6D127E348AF</key>
+		<string>../..ParseStarterProject/</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/tommygibbons46/saidThatFinal.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2AF8132B3BDF62F7D8945176744497FAF6A4981F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2AF8132B3BDF62F7D8945176744497FAF6A4981F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>5:17%20copy</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>E927DE07DB5754A01D5927073321D6D127E348AF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ParseStarterProject</string>
+		</dict>
+	</array>
+</dict>
+</plist>
