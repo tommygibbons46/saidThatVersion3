@@ -376,7 +376,7 @@ class QuotesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UI
         
         self.createLike(andQuote, forCell: forCell)
     }
-   
+    
     
     func createLike(quoteToLike: Quote, forCell: QuoteCell)
     {
