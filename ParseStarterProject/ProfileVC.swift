@@ -36,8 +36,9 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
     var theCurrentUser: PassiveUser?
     var tableNumber: NSNumber?
     var quoteToDelete: Quote?
-    
-    
+    var myClaps : [Clap] = []
+    var quotesIClap: [Quote] = []
+
     
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -230,13 +231,25 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
     func setUpLabels()
     {
         let postsTap = UITapGestureRecognizer(target: self, action: "showPosts:")
+        let postsTap2 = UITapGestureRecognizer(target: self, action: "showPosts:")
+        self.postsCountLabel.userInteractionEnabled = true
         self.postsLabel.addGestureRecognizer(postsTap)
+        self.postsCountLabel.addGestureRecognizer(postsTap2)
         let quotesTap = UITapGestureRecognizer(target: self, action: "showQuotes:")
+        let quotesTap2 = UITapGestureRecognizer(target: self, action: "showQuotes:")
+        self.quotesCountLabel.userInteractionEnabled = true
         self.quotesLabel.addGestureRecognizer(quotesTap)
+        self.quotesCountLabel.addGestureRecognizer(quotesTap2)
         let followersTap = UITapGestureRecognizer(target: self, action: "showFollowers:")
+        let followersTap2 = UITapGestureRecognizer(target: self, action: "showFollowers:")
+        self.followersCountLabel.userInteractionEnabled = true
         self.followersLabel.addGestureRecognizer(followersTap)
+        self.followersCountLabel.addGestureRecognizer(followersTap2)
         let followingTap = UITapGestureRecognizer(target: self, action: "showFollowing:")
+        let followingTap2 = UITapGestureRecognizer(target: self, action: "showFollowing:")
+        self.followingCountLabel.userInteractionEnabled = true
         self.followingLabel.addGestureRecognizer(followingTap)
+        self.followingCountLabel.addGestureRecognizer(followingTap2)
     }
     
     
@@ -356,6 +369,16 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
                 cell.qTextLabel2.textColor = UIColor.blackColor()
                 cell.applaudButton2.tintColor = UIColor(red: 162/255, green: 221/255, blue: 150/255, alpha: 1.0)
             }
+            if contains(self.quotesIClap, quoteToShow)
+            {
+                cell.iClapped2 = true
+                cell.applaudButton2.setTitle("Unapplaud", forState: UIControlState.Normal)
+            }
+            else
+            {
+                cell.iClapped2 = false
+                cell.applaudButton2.setTitle("Applaud", forState: UIControlState.Normal)
+            }
             return cell
         }
         else if tableNumber!.isEqualToNumber(2)
@@ -395,6 +418,16 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
             }
             self.tableView.rowHeight = UITableViewAutomaticDimension
             self.tableView.estimatedRowHeight = 100
+            if contains(self.quotesIClap, quoteToShow)
+            {
+                cell.iClapped2 = true
+                cell.applaudButton2.setTitle("Unapplaud", forState: UIControlState.Normal)
+            }
+            else
+            {
+                cell.iClapped2 = false
+                cell.applaudButton2.setTitle("Applaud", forState: UIControlState.Normal)
+            }
             return cell
         }
         else if tableNumber!.isEqualToNumber(3) //the selected users followers - he is to, they are from
@@ -790,38 +823,126 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
                     forCell.clapImage2.alpha = 0.0
                     }, completion: nil)
         }
-        
-        self.createLike(andQuote, forCell: forCell)
+        if forCell.iClapped2 == false
+        {
+            self.createLike(andQuote, forCell: forCell)
+        }
+        else
+        {
+            self.deleteLike(andQuote, forCell: forCell)
+        }
+
     }
     
     
     func createLike(quoteToLike: Quote, forCell: QuoteCell)
     {
-        let newNumber = quoteToLike.likesCounter.integerValue + 1
-        forCell.likeButton2.setTitle(String(newNumber), forState: UIControlState.Normal)
-        let newUpvote = Upvote(className: "Upvote")
-        newUpvote.quote = quoteToLike
-        newUpvote.liker = self.theCurrentUser!
-        var upVoteACL = PFACL()
-        upVoteACL.setPublicWriteAccess(true)
-        upVoteACL.setPublicReadAccess(true)
-        newUpvote.ACL = upVoteACL
-        newUpvote.saveInBackgroundWithBlock { (success, error) -> Void in
-            if error == nil
+        let clap = Clap()
+        clap.clapper = self.theCurrentUser!
+        clap.quoteClapped = quoteToLike
+        clap.saveInBackgroundWithBlock { (success, error) -> Void in
+            if success
             {
-                let upVoteRelation = quoteToLike.relationForKey("upvotes")
-                upVoteRelation.addObject(newUpvote)
+                println("clap saved")
+                forCell.applaudButton2.setTitle("Unapplaud", forState: UIControlState.Normal)
+                self.myClaps.append(clap)
+                self.quotesIClap.append(clap.quoteClapped)
+                forCell.iClapped2 = true
+                let newNumber = quoteToLike.likesCounter.integerValue + 1
+                forCell.likeButton2.setTitle(String(newNumber), forState: UIControlState.Normal)
                 quoteToLike.incrementKey("likesCounter", byAmount: 1)
                 quoteToLike.saveInBackgroundWithBlock
                     { (success, error) -> Void in
                         if error == nil
                         {
+                            let pushQueryOne = PFInstallation.query()
+                            pushQueryOne!.whereKey("deviceOwner", equalTo: quoteToLike.saidBy)
+                            let pushQueryTwo = PFInstallation.query()
+                            pushQueryTwo?.whereKey("deviceOwner", equalTo: quoteToLike.poster)
+                            let compoundPushQuery = PFQuery.orQueryWithSubqueries([pushQueryOne!, pushQueryTwo!])
+                            let push = PFPush()
+                            push.setQuery(compoundPushQuery) // Set our Installation query
+                            let name = "\(self.theCurrentUser!.firstName) \(self.theCurrentUser!.lastName) applauds your saidThat"
+                            push.setMessage(name)
+                            push.sendPushInBackground()
+                            println("push should be sent")
                             //println("quote was saved, was the countersaved?")
                         }
                 }
                 
+                
+                
+                
             }
         }
+    }
+    
+    
+    func deleteLike(quoteToLike: Quote, forCell: QuoteCell)
+    {
+        //we need to find the clap object associated with this quote and then delete it
+        
+        //iterate through our array of claps if our clap.quote = quoteToLike, delete that quote
+        
+        for clap in myClaps
+        {
+            if clap.quoteClapped == quoteToLike
+            {
+                
+                clap.deleteInBackgroundWithBlock({ (success, error) -> Void in
+                    if success
+                    {
+                        println("we deleted this like")
+                        forCell.applaudButton2.setTitle("Applaud", forState: .Normal)
+                        let u = find(self.quotesIClap, clap.quoteClapped)
+                        println("the array is \(self.quotesIClap.count) and we are looking at \(u)")
+                        self.quotesIClap.removeAtIndex(u!)
+                        println("three")
+                        let i = find(self.myClaps, clap)
+                        println("the array is \(self.myClaps.count) and we are looking at \(i)")
+                        self.myClaps.removeAtIndex(i!)
+                        forCell.iClapped2 = false
+                        let newNumber = quoteToLike.likesCounter.integerValue - 1
+                        forCell.likeButton2.setTitle(String(newNumber), forState: UIControlState.Normal)
+                        quoteToLike.incrementKey("likesCounter", byAmount: -1)
+                        quoteToLike.saveInBackgroundWithBlock
+                            { (success, error) -> Void in
+                                if error == nil
+                                {
+                                    
+                                }
+                        }
+                        
+                    }
+                })
+            }
+        }
+        
+        
+        
+        
+    }
+    
+
+    
+    func findMyClaps()
+    {
+        let myClaps = Clap.query()
+        myClaps?.whereKey("clapper", equalTo: self.theCurrentUser!)
+        myClaps?.findObjectsInBackgroundWithBlock({ (myClapQs, error) -> Void in
+            if error == nil
+            {
+                if let clapsArray = myClapQs as? [Clap]
+                {
+                    for clap in clapsArray
+                    {
+                        self.myClaps.append(clap)
+                        let clappedQuote = clap.quoteClapped
+                        self.quotesIClap.append(clappedQuote)
+                    }
+                }
+            }
+        })
         
     }
     
@@ -901,6 +1022,7 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
                 if error == nil
                 {
                     //println("follow saved")
+                    self.sendPush()
                     self.theCurrentUsersFollowsTo.append(newFollow)
                     self.theCurrentUsersFollowsToUser.append(newFollow.to)//change these arrays
                     self.tableView.reloadData()
@@ -921,6 +1043,20 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
         }
     }
     
+    func sendPush()
+    {
+        let pusher = PFInstallation.query()
+        pusher!.whereKey("deviceOwner", equalTo: self.selectedUser!)
+        let push = PFPush()
+        push.setQuery(pusher) // Set our Installation query
+        let message = "\(self.theCurrentUser!.firstName) \(self.theCurrentUser!.lastName) is now following you"
+        push.setMessage(message)
+        push.sendPushInBackground()
+        println("push should be sent")
+    }
+    
+    
+    
     func deleteFollow(to: PassiveUser, from: PassiveUser)
     {
         
@@ -936,7 +1072,7 @@ class ProfileVC: UIViewController, UITableViewDataSource, UITableViewDelegate,  
                     let i = find(self.theCurrentUsersFollowsTo, follow)
                     self.theCurrentUsersFollowsTo.removeAtIndex(i!)
                     let u = find(self.theCurrentUsersFollowsToUser, follow.to)
-                    self.theCurrentUsersFollowsToUser.removeAtIndex(i!)
+                    self.theCurrentUsersFollowsToUser.removeAtIndex(u!)
                     follow.deleteInBackgroundWithBlock({ (success, error) -> Void in
                         if error == nil
                         {

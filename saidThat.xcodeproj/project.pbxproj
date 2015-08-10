@@ -37,6 +37,7 @@
 		96CC47C61AFB0F110042CB95 /* PassiveUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CC47C51AFB0F110042CB95 /* PassiveUser.swift */; };
 		96CC47C81AFB12F90042CB95 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CC47C71AFB12F90042CB95 /* Follow.swift */; };
 		96CC47CA1AFB3EBD0042CB95 /* QuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CC47C91AFB3EBD0042CB95 /* QuoteCell.swift */; };
+		96EDF72A1B54AD0D00A1F845 /* Clap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EDF7291B54AD0D00A1F845 /* Clap.swift */; };
 		96F25D1E1B040D4500DE2199 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F25D1D1B040D4500DE2199 /* UserCell.swift */; };
 		96F25D201B0413BF00DE2199 /* photoCut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F25D1F1B0413BF00DE2199 /* photoCut.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +76,7 @@
 		96CC47C51AFB0F110042CB95 /* PassiveUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassiveUser.swift; sourceTree = "<group>"; };
 		96CC47C71AFB12F90042CB95 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
 		96CC47C91AFB3EBD0042CB95 /* QuoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuoteCell.swift; sourceTree = "<group>"; };
+		96EDF7291B54AD0D00A1F845 /* Clap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clap.swift; sourceTree = "<group>"; };
 		96F25D1D1B040D4500DE2199 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCell.swift; path = ../UserCell.swift; sourceTree = "<group>"; };
 		96F25D1F1B0413BF00DE2199 /* photoCut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = photoCut.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,7 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				967C020A1B0AA66300265053 /* Launch Screen.xib */,
-				81BA81471A49DA1800E65899 /* ParseStarterProject */,
+				81BA81471A49DA1800E65899 /* Classes */,
 				81BA816A1A49DB5600E65899 /* Frameworks */,
 				81BA81461A49DA1800E65899 /* Products */,
 				9627FB3A1AF9C22C00DBE17A /* AppDelegate */,
@@ -121,21 +123,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		81BA81471A49DA1800E65899 /* ParseStarterProject */ = {
+		81BA81471A49DA1800E65899 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				965C3B491AF8858600365D3A /* QuotesVC.swift */,
-				9627FB381AF98A9B00DBE17A /* ProfileVC.swift */,
-				965C3B4A1AF8858600365D3A /* PostQuoteVC.swift */,
-				9693E1E21B0396BC00716A13 /* LikesViewController.swift */,
-				9627FB781AFA8F3700DBE17A /* Login/Signup */,
 				9627FB3B1AF9C24E00DBE17A /* Parse Subclasses */,
-				96F25D1D1B040D4500DE2199 /* UserCell.swift */,
-				96CC47C91AFB3EBD0042CB95 /* QuoteCell.swift */,
-				81BA81511A49DA1800E65899 /* Images.xcassets */,
+				96D99D761B7934CF00182A89 /* Custom Tableview cells */,
 				9693E1E11B0321CA00716A13 /* extensions */,
+				96D99D771B79356800182A89 /* View Controllers */,
+				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				81BA81481A49DA1800E65899 /* Supporting Files */,
 			);
+			name = Classes;
 			path = ParseStarterProject;
 			sourceTree = "<group>";
 		};
@@ -188,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				965C3B4D1AF8859B00365D3A /* Quote.swift */,
+				96EDF7291B54AD0D00A1F845 /* Clap.swift */,
 				965C3B571AF88B5100365D3A /* User.swift */,
 				96CC47C71AFB12F90042CB95 /* Follow.swift */,
 				9627FB721AF9F9B300DBE17A /* Upvote.swift */,
@@ -214,6 +213,27 @@
 				96F25D1F1B0413BF00DE2199 /* photoCut.swift */,
 			);
 			name = extensions;
+			sourceTree = "<group>";
+		};
+		96D99D761B7934CF00182A89 /* Custom Tableview cells */ = {
+			isa = PBXGroup;
+			children = (
+				96F25D1D1B040D4500DE2199 /* UserCell.swift */,
+				96CC47C91AFB3EBD0042CB95 /* QuoteCell.swift */,
+			);
+			name = "Custom Tableview cells";
+			sourceTree = "<group>";
+		};
+		96D99D771B79356800182A89 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9627FB781AFA8F3700DBE17A /* Login/Signup */,
+				965C3B491AF8858600365D3A /* QuotesVC.swift */,
+				9627FB381AF98A9B00DBE17A /* ProfileVC.swift */,
+				965C3B4A1AF8858600365D3A /* PostQuoteVC.swift */,
+				9693E1E21B0396BC00716A13 /* LikesViewController.swift */,
+			);
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,6 +342,7 @@
 				96CC47C81AFB12F90042CB95 /* Follow.swift in Sources */,
 				965C3B4E1AF8859B00365D3A /* Quote.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
+				96EDF72A1B54AD0D00A1F845 /* Clap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +387,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "e880a022-0115-4eb8-8ca7-941d5e87eb08";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -403,6 +425,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "e880a022-0115-4eb8-8ca7-941d5e87eb08";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
@@ -414,7 +437,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Thomas Gibbons (N28FB6N282)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Thomas Gibbons (N28FB6N282)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -422,6 +446,7 @@
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = saidThat;
+				PROVISIONING_PROFILE = "e880a022-0115-4eb8-8ca7-941d5e87eb08";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Debug;
@@ -431,7 +456,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Thomas Gibbons (N28FB6N282)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Thomas Gibbons (N28FB6N282)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -439,6 +465,7 @@
 				INFOPLIST_FILE = ParseStarterProject/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = saidThat;
+				PROVISIONING_PROFILE = "e880a022-0115-4eb8-8ca7-941d5e87eb08";
 				SWIFT_OBJC_BRIDGING_HEADER = "ParseStarterProject/ParseStarterProject-Bridging-Header.h";
 			};
 			name = Release;
